@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>高级前端开发工程师面试题</title>
+    <link rel="stylesheet" href="quest.css">
+</head>
+
+<body>
+    <div class="conta">
+        <div class="modules">
+            <p class="header_title">1.JavaScript变量作用域</p>
+            <a href="http://www.cnblogs.com/lhb25/archive/2011/09/06/javascript-scope-chain.html">参考网址</a>
+            <p class="body_title">
+                作用域就是变量与函数的可访问范围，即作用域控制着变量与函数的可见性和生命周期。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。
+            </p>
+            <p class="body_title">
+                1.1 全局作用域（Global Scope）
+            </p>
+            <p class="body_title">
+                在代码中任何地方都能访问到的对象拥有全局作用域，一般来说以下几种情形拥有全局作用域：
+            </p>
+            <p class="body_title">
+                （1）最外层函数和在最外层函数外面定义的变量拥有全局作用域，例如：
+            </p>
+            <img src="1.1png" alt="">
+            <p class="body_title">
+                （2）所有<b>末定义直接赋值的变量</b>自动声明为拥有全局作用域，例如：
+            </p>
+            <img src="1.2png" alt="">
+            <p class="body_title">
+                变量blogName拥有全局作用域，而authorName在函数外部无法访问到。
+            </p>
+            <p class="body_title">
+                （3）所有window对象的属性拥有全局作用域
+            </p>
+            <p class="body_title">
+                一般情况下，window对象的内置属性都拥有全局作用域，例如window.name、window.location、window.top等等。
+            </p>
+            <br>
+            <p class="body_title">
+                1.2 局部作用域（Local Scope）
+            </p>
+            <p class="body_title">
+                和全局作用域相反，局部作用域一般只在固定的代码片段内可访问到，最常见的例如函数内部，所有在一些地方也会看到有人把这种作用域称为函数作用域，例如下列代码中的blogName和函数innerSay都只拥有局部作用域。
+            </p>
+            <img src="1.3png" alt="">
+            <hr>
+            <hr>
+        </div>
+        <div class="modules">
+            <p class="header_title">2.JavaScript函数作用域</p>
+            <a href="http://blog.csdn.net/yueguanghaidao/article/details/9568071">参考网址</a>
+            <p class="body_title">
+                所谓函数作用域就是说：变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。
+            </p>
+            <p class="body_title">
+                先看一小段代码：
+            </p>
+            <img src="2.1.png" alt="">
+            <p class="body_title">
+                第一句输出的是： "undefined"，而不是 "global"。
+            </p>
+            <p class="body_title">
+                第二句输出的是："local"
+            </p>
+            <p class="body_title">
+                你可能会认为第一句会输出："global",你认为代码还没执行var scope="local",所以肯定会输出“global"。
+            </p>
+            <p class="body_title">
+                我说这想法完全没错，只不过用错了对象。我们首先要区分Javascript的函数作用域与我们熟知的C/C++等的块级作用域。
+            </p>
+            <p class="body_title">
+                在C/C++中，花括号内中的每一段代码都具有各自的作用域，而且变量在声明它们的<b>代码段</b>之外是不可见的。
+            </p>
+            <p class="body_title">
+                而Javascript压根没有块级作用域，而是函数作用域. 所谓函数作用域就是说：变量在声明它们的函数体以及这个<b>函数体</b>嵌套的任意函数体内都是有定义的。
+            </p>
+            <p class="body_title">
+                所以根据函数作用域的意思，可以将上述代码重写如下：
+            </p>
+            <img src="2.2.png" alt="">
+            <p class="body_title ">
+                我们可以看到，由于函数作用域的特性，局部变量在整个函数体始终是由定义的，我们可以将变量声明”提前“到函数体顶部，同时变量初始化还在原来位置。 为什么说Js没有块级作用域呢，有以下代码为证：
+            </p>
+            <img src="2.3.png" alt="">
+            <p class="body_title ">
+                都输出是“local",如果有块级作用域，明显if语句将创建局部变量name,并不会修改全局name,可是没有这样，所以Js没有块级作用域。 现在很好理解为什么会得出那样的结果了。scope声明覆盖了全局的scope,但是还没有赋值，所以输出：”undefined“。 所以下面的代码也就很好理解了。
+            </p>
+            <img src="2.4.png" alt="">
+            <p class="body_title ">
+                输出：2 ”ifscope"
+            </p>
+        </div>
+        <div class="modules ">
+            <p class="header_title ">3.JavaScript作用域链</p>
+            <a href="http://www.cnblogs.com/lhb25/archive/2011/09/06/javascript-scope-chain.html">参考网址</a>
+            <p class="body_title ">在JavaScript中，函数也是对象，实际上，JavaScript里一切都是对象。函数对象和其它对象一样，拥有可以通过代码访问的属性和一系列仅供JavaScript引擎访问的内部属性。其中一个内部属性是[[Scope]]，由ECMA-262标准第三版定义，该内部属性包含了函数被创建的作用域中对象的集合，这个集合被称为函数的作用域链，它决定了哪些数据能被函数访问。</p>
+            <p class="body_title ">
+                当一个函数创建后，它的作用域链会被创建此函数的作用域中可访问的数据对象填充。例如定义下面这样一个函数：
+            </p>
+            <p class="body_title ">
+                在函数add创建时，它的作用域链中会填入一个全局对象，该全局对象包含了所有全局变量，如下图所示（注意：图片只例举了全部变量中的一部分）：
+            </p>
+        </div>
+        <div class="modules ">
+            <p class="header_title ">4.JavaScript变量声明提升</p>
+            <a href="http://blog.csdn.net/sunxing007/article/details/9034253">参考网址</a>
+            <p class="body_title ">Hoisting (变量提升)： 函数声明和变量声明总是会被解释器悄悄地被“提升”到方法体的最顶部。
+            </p>
+            <p class="body_title ">4.1 变量赋值并没有被提升，只是声明被提升了。</p>
+            <img src="4.1.png" alt="">
+            <p class="body_title ">4.2 函数的声明有点不一样，函数体也会一同被提升。但是请注意，函数的声明有两种方式：</p>
+            <img src="4.2.png" alt="">
+            <p class="body_title ">这个例子里面，只有"函数式"的声明才会连同函数体一起被提升。foo的声明会被提升，但是它指向的函数体只会在执行的时候才被赋值。</p>
+        </div>
+        <div class="modules ">
+            <p class="header_title ">5.JavaScript字面量</p>
+            <a href="http://www.cnblogs.com/coolicer/archive/2010/10/14/1850977.html">参考网址</a>
+            <p class="body_title ">在编程语言中，字面量是一种表示值的记法。例如，"Hello, World!" 在许多语言中都表示一个字符串字面量（string literal ），JavaScript也不例外。以下也是JavaScript字面量的例子，如5、true、false和null，它们分别表示一个整数、两个布尔值和一个空对象。</p>
+            <p class="body_title ">JavaScript还支持对象和数组字面量，允许使用一种简洁而可读的记法来创建数组和对象。考虑以下语句，其中创建了一个包含两个属性的对象（firstName和lastName）：</p>
+            <img src="5.1.jpg" alt="">
+            <p class="body_title ">还可以使用一种等价的方法创建同样的对象：</p>
+            <img src="5.2.jpg" alt="">
+            <p class="body_title ">以上赋值语句的右边是一个对象字面量（object literal）。对象字面量是一个名值对列表，每个名值对之间用逗号分隔，并用一个大括号括起。各名值对表示对象的一个属性，名和值这两部分之间用一个冒号分隔。</p>
+            <p class="body_title ">要创建一个数组，可以创建Array对象的一个实例：</p>
+            <img src="5.3.jpg" alt="">
+            <p class="body_title ">不过首选的方法是使用一个数组字面量（array literal），这是一个用逗号分隔的值列表，用中括号括起：</p>
+            <img src="5.4.jpg" alt="">
+            <p class="body_title ">前面的例子展示了对象和数组字面量中可以包含其他字面量。以下是一个更复杂的示例：</p>
+            <img src="5.5.jpg" alt="">
+            <p class="body_title ">赋给team变量的对象有3个属性：name、members和count。注意，''表示空串，[]是一个空数组。甚至count属性的值也是一个字面量，即函数字面量（function literal）：</p>
+            <img src="5.6.jpg" alt="">
+            <p class="body_title ">函数字面量如下构造：前面是一个function关键字，后面是一个函数名（可选）和参数表。然后是函数体，包围在大括号中。</p>
+        </div>
+        <div class="modules ">
+            <p class="header_title ">6.JavaScript中普通对象，函数对象，原型对象的区别</p>
+            <a href="http://www.108js.com/article/article1/10201.html?id=1092">参考链接</a>
+            <p class="body_title "> JavaScript 中，万物皆对象！但对象也是有区别的。分为普通对象和函数对象，Object ，Function 是JS自带的函数对象。下面举例说明
+            </p>
+            <img src="6.1.png" alt="">
+            <p class="body_title ">在上面的例子中 o1 o2 o3 为普通对象，f1 f2 f3 为函数对象。怎么区分，其实很简单，凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。f1,f2,归根结底都是通过 new Function()的方式进行创建的。Function Object 也都是通过 New Function()创建的。</p>
+            <p class="body_title "> 在JavaScript 中，每当定义一个对象（函数）时候，对象中都会包含一些预定义的属性。其中函数对象的一个属性就是原型对象 prototype。注：普通对象没有prototype,但有__proto__属性。 原型对象其实就是普通对象（Function.prototype除外,它是函数对象，但它很特殊，他没有prototype属性（前面说道函数对象都有prototype属性））。看下面的例子：
+            </p>
+            <img src="6.2.png" alt="">
+            <p class="body_title ">从这句console.log(f1.prototype);//object 的输出就结果可以看出，f1.prototype就是f1的一个实例对象。就是在f1创建的时候,创建了一个它的实例对象并赋值给它的prototype，基本过程如下： </p>
+            <p class="body_title ">var temp = new f1();</p>
+            <p class="body_title "> f1.prototype = temp;</p>
+            <p class="body_title ">所以，Function.prototype为什么是函数对象就迎刃而解了，上文提到凡是new Function ()产生的对象都是函数对象，所以temp1是函数对象。
+            </p>
+            <p class="body_title ">var temp1 = new Function ();</p>
+            <p class="body_title ">Function.prototype = temp1;</p>
+            <p class="body_title ">那原型对象是用来做什么的呢？主要作用是用于继承。举了例子：</p>
+            <img src="6.3.png" alt="">
+            <p class="body_title ">从这个例子可以看出，通过给person.prototype设置了一个函数对象的属性，那有person实例（例中：zjh）出来的普通对象就继承了这个属性。具体是怎么实现的继承，就要讲到下面的原型链了。</p>
+        </div>
+        <div class="modules ">
+            <p class="header_title ">7.JavaScript原型链</p>
+            <a href="http://www.cnblogs.com/TomXu/archive/2012/01/05/2305453.html">参考网址</a>
+            <a href="http://www.108js.com/article/article1/10201.html?id=1092">参考链接</a>
+            <p class="body_title ">JS在创建对象（不论是普通对象还是函数对象）的时候，都有一个叫做__proto__的内置属性，用于指向创建它的函数对象的原型对象prototype。以上面的例子为例：</p>
+            <p class="body_title  highlight"> console.log(zjh.__proto__ === person.prototype) //true</p>
+            <p class="body_title ">同样，person.prototype对象也有__proto__属性，它指向创建它的函数对象（Object）的prototype</p>
+            <p class="body_title highlight">console.log(person.prototype.__proto__ === Object.prototype) //true
+            </p>
+            <p class="body_title ">继续，Object.prototype对象也有__proto__属性，但它比较特殊，为null
+            </p>
+            <p class="body_title highlight"> console.log(Object.prototype.__proto__) //null</p>
+            <p class="body_title ">我们把这个有__proto__串起来的直到Object.prototype.__proto__为null的链叫做原型链。如下图：</p>
+            <img src="7.1.jpg" alt="">
+            <p class="body_title ">原型对象prototype中都有个预定义的constructor属性，用来引用它的函数对象。这是一种循环引用</p>
+            <p class="body_title ">person.prototype.constructor === person //true</p>
+            <p class="body_title ">Function.prototype.constructor === Function //true</p>
+            <p class="body_title ">Object.prototype.constructor === Object //true
+            </p>
+            <p class="body_title ">有两点需要注意：</p>
+            <p class="body_title ">（1）注意Object.constructor===Function；//true 本身Object就是Function函数构造出来的 </p>
+            <p class="body_title ">（2）如何查找一个对象的constructor，就是在该对象的原型链上寻找碰到的第一个constructor属性所指向的对象</p>
+        </div>
+        <div class="modules ">
+            <p class="header_title ">8.沿着原型链的属性查找</p>
+            <a href="http://www.cnblogs.com/TomXu/archive/2012/01/05/2305453.html">参考网址</a>
+            <p class="body_title ">当查找一个对象的属性时，JavaScript 会向上遍历原型链，直到找到给定名称的属性为止，到查找到达原型链的顶部 - 也就是 Object.prototype - 但是仍然没有找到指定的属性，就会返回 undefined，我们来看一个例子：</p>
+            <img src="8.1.png" alt="">
+            <p class="body_title ">通过代码运行，我们发现subtract是安装我们所说的向上查找来得到结果的，但是add方式有点小不同，这也是我想强调的，就是属性在查找的时候是先查找自身的属性，如果没有再查找原型，再没有，再往上走，一直插到Object的原型上，所以在某种层面上说，用 for in语句遍历属性的时候，效率也是个问题。</p>
+            <p class="body_title ">还有一点我们需要注意的是，我们可以赋值任何类型的对象到原型上，但是不能赋值原子类型的值，比如如下代码是无效的：</p>
+            <p class="body_title ">function Foo() {}</p>
+            <p class="body_title ">Foo.prototype = 1; // 无效</p>
+        </div>
+        <div class="modules ">
+            <p class="header_title ">9.简要描述你对hasOwnProperty函数的了解</p>
+            <p class="body_title ">hasOwnProperty是Object.prototype的一个方法，它可是个好东西，他能判断一个对象是否包含自定义属性而不是原型链上的属性，因为hasOwnProperty 是 JavaScript 中唯一一个处理属性但是不查找原型链的函数。</p>
+            <img src="9.1.png" alt="">
+            <p class="body_title ">只有 hasOwnProperty 可以给出正确和期望的结果，这在遍历对象的属性时会很有用。 没有其它方法可以用来排除原型链上的属性，而不是定义在对象自身上的属性。</p>
+            <p class="body_title ">但有个恶心的地方是：JavaScript 不会保护 hasOwnProperty 被非法占用，因此如果一个对象碰巧存在这个属性，就需要使用外部的 hasOwnProperty 函数来获取正确的结果。</p>
+            <img src="9.2.png" alt="">
+            <p class="body_title ">当检查对象上某个属性是否存在时，hasOwnProperty 是唯一可用的方法。同时在使用 for in loop 遍历对象时，推荐总是使用 hasOwnProperty 方法，这将会避免原型对象扩展带来的干扰，我们来看一下例子：</p>
+            <img src="9.3.png" alt="">
+            <p class="body_title ">总结：推荐使用 hasOwnProperty，不要对代码运行的环境做任何假设，不要假设原生对象是否已经被扩展了。
+            </p>
+        </div>
+        <div class="modules ">
+            <p class="header_title ">10.数组元素去重的方法</p>
+            <p class="body_title ">第一种是比较常规的方法</p>
+            <p class="body_title ">1.构建一个新的数组存放结果</p>
+            <p class="body_title ">2.for循环中每次从原数组中取出一个元素，用这个元素循环与结果数组对比</p>
+            <p class="body_title ">3.若结果数组中没有该元素，则存到结果数组中</p>
+            <img src="10.1.png" alt="">
+            <p class="body_title ">第二种方法比上面的方法效率要高</p>
+            <p class="body_title ">1.先将原数组进行排序</p>
+            <p class="body_title ">2.检查原数组中的第i个元素 与 结果数组中的最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置</p>
+            <p class="body_title ">3.如果不相同，则将该元素存入结果数组中</p>
+            <img src="10.2.png" alt="">
+            <p class="body_title ">第二种方法也会有一定的局限性，因为在去重前进行了排序，所以最后返回的去重结果也是排序后的。如果要求不改变数组的顺序去重，那这种方法便不可取了。</p>
+            <p class="body_title ">第三种方法（推荐使用）</p>
+            <p class="body_title ">1.创建一个新的数组存放结果</p>
+            <p class="body_title ">2.创建一个空对象</p>
+            <p class="body_title ">3.for循环时，每次取出一个元素与对象进行对比，如果这个元素不重复，则把它存放到结果数组中，同时把这个元素的内容作为对象的一个属性，并赋值为1，存入到第2步建立的对象中。</p>
+            <p class="body_title ">说明：至于如何对比，就是每次从原数组中取出一个元素，然后到对象中去访问这个属性，如果能访问到值，则说明重复。</p>
+            <img src="10.3.png" alt="">
+        </div>
+        <div class="modules ">
+            <p class="header_title ">11.理解与使用Javascript中的回调函数</p>
+            <a href="http://www.cnblogs.com/daishuguang/p/3918644.html">参考链接</a>
+            <p class="body_title ">在Javascript中，函数是第一类对象，这意味着函数可以像对象一样按照第一类管理被使用。既然函数实际上是对象：它们能被“存储”在变量中，能作为函数参数被传递，能在函数中被创建，能从函数中返回。</p>
+            <p class="body_title ">一个回调函数，也被称为高阶函数，是一个被作为参数传递给另一个函数（在这里我们把另一个函数叫做“otherFunction”）的函数，回调函数在otherFunction中被调用。一个回调函数本质上是一种编程模式（为一个常见问题创建的解决方案），因此，使用回调函数也叫做回调模式。</p>
+            <p class="body_title ">当我们将一个回调函数作为参数传递给另一个函数是，我们仅仅传递了函数定义。我们并没有在参数中执行函数。我们并不传递像我们平时执行函数一样带有一对执行小括号()的函数。</p>
+            <p class="body_title ">需要注意的很重要的一点是回调函数并不会马上被执行。它会在包含它的函数内的某个特定时间点被“回调”（就像它的名字一样）。</p>
+            <p class="body_title ">回调函数是闭包</p>
+            <p class="body_title ">都能够我们将一个毁掉函数作为变量传递给另一个函数时，这个毁掉函数在包含它的函数内的某一点执行，就好像这个回调函数是在包含它的函数中定义的一样。这意味着回调函数本质上是一个闭包。 正如我们所知，闭包能够进入包含它的函数的作用域，因此回调函数能获取包含它的函数中的变量，以及全局作用域中的变量。
+            </p>
+            <p class="body_title "></p>
+            <p class="body_title "></p>
+            <p class="body_title "></p>
+            <p class="body_title "></p>
+        </div>
+        <div class="modules ">
+            <p class="header_title ">闭包的用法</p>
+            <p class="body_title "></p>
+        </div>
+        <div class="modules ">
+            <p class="header_title "></p>
+            <p class="body_title "></p>
+        </div>
+        <div class="modules ">
+            <p class="header_title "></p>
+            <p class="body_title "></p>
+        </div>
+        <div class="modules ">
+            <p class="header_title "></p>
+            <p class="body_title "></p>
+        </div>
+        <div class="modules ">
+            <p class="header_title "></p>
+            <p class="body_title "></p>
+        </div>
+        <div class="modules ">
+            <p class="header_title "></p>
+            <p class="body_title "></p>
+        </div>
+    </div>
+</body>
+
+</html>
